@@ -83,7 +83,8 @@ var wpsyntax2codemirror = (function ($, document, window, CodeMirror) {
         mode: mode,
         lineNumbers: true,
         readOnly: 'nocursor',
-        viewportMargin: Infinity
+        viewportMargin: Infinity,
+        theme: 'dracula'
       });
     } catch (exception) {
       console.error('wpsyntax2codemirror::', exception);
