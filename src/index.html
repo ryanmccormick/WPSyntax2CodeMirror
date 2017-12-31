@@ -7,7 +7,6 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
     <title>Starter Template for Bootstrap</title>
 
@@ -19,6 +18,12 @@
 
     <!-- Custom styles for this template -->
     <link href="assets/css/starter-template.css" rel="stylesheet">
+
+    <!-- CodeMirror Base CSS -->
+    <link href="../node_modules/codemirror/lib/codemirror.css" rel="stylesheet">
+
+    <!-- Custom Page CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
 
   </head>
 
@@ -46,11 +51,223 @@
     </nav>
 
     <div class="container">
+      <h1>WP-Syntax to CodeMirror Example</h1>
+      <hr>
 
-      <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-      </div>
+      <h3>TypeScript Example</h3>
+<pre lang="typescript">export class MyFunkyClassName {
+
+    title: string;
+    private _somePrivateVal: string[];
+
+    constructor(private someService: SomeService) { }
+
+    get somePrivateVal(): string[] {
+      return this._somePrivateVal;
+    }
+
+    set somePrivateVal(value: string[]) {
+      this._somePrivateVal = value;
+    }
+
+    setSomePrivateVal(value: string[]): void {
+      this._somePrivateVal = value;
+    }
+}</pre>
+
+      <h3>JavaScript Example</h3>
+
+      <pre lang="javascript" line="1">
+        function logSomething(something) {
+          console.log(something);
+        }</pre>
+
+      <h3>VBA Example</h3>
+
+      <pre lang="VB" line="1">    Function getBusinessDate(startDate As Date, _
+    businessdays As Long) As Date
+        Dim curDate As Date, calDays As Long, busDay As Long
+        calDays = 0: busDays = 0
+        curDate = CDate(IIf(businessdays &gt; 0, _
+        startDate + 1, startDate - 1))
+
+        Do While busDays &lt; Abs(businessdays)
+            If isWeekend(curDate) Then
+                calDays = calDays + 1
+            ElseIf isHoliday(curDate) Then
+                calDays = calDays + 1
+            Else
+                calDays = calDays + 1
+                busDays = busDays + 1
+            End If
+            curDate = CDate(IIf(businessdays &gt; 0, _
+            curDate + 1, curDate - 1))
+        Loop
+        getBusinessDate = CDate(IIf(businessdays &gt; 0, _
+        startDate + calDays, startDate - calDays))
+    End Function
+
+    Function isHoliday(curDate As Date) As Boolean
+        Dim holiday(1 To 8) As Date
+        ' ////////////////////////////////////////////////////
+        ' // BUSINESS HOLIDAY SCHEDULE
+        ' ////////////////////////////////////////////////////
+
+        ' New Years Day 01/01. Custom function 'nextWeekDay'
+        ' Basis: Some companies offer the next business
+        ' day after new years as a vacation day if
+        ' new years falls on a Sunday. OR the previous business
+        ' day if new years falls on a saturday.
+        ' /////////////////////////////////////////////////
+        holiday(1) = satPrevSunNext(CDate("01/01/" &amp; year(curDate)))
+
+        ' Martin Luther King JR Day.
+        ' Rule: Third Monday in January
+        ' /////////////////////////////////////////////////
+        holiday(2) = dateFromDesc(3, 2, 1, year(curDate))
+
+        ' Memorial Day
+        ' Rule: Last Monday in May
+        ' /////////////////////////////////////////////////
+        holiday(3) = dateFromDesc(-1, 2, 5, year(curDate))
+
+        ' Independence Day 07/04. Custom function 'julyFour'
+        ' Basis: Some companies offer the business day before
+        ' Independence day as a vacation day if July 4th falls
+        ' on a weekend.
+        holiday(4) = prevWeekDay(CDate("07/04/" &amp; year(curDate)))
+
+        ' Labor Day
+        ' Rule: First Monday in September
+        ' /////////////////////////////////////////////////
+        holiday(5) = dateFromDesc(1, 2, 9, year(curDate))
+
+        ' Thanksgiving.
+        ' Rule: Fourth Thursday in November.
+        ' /////////////////////////////////////////////////
+        holiday(6) = dateFromDesc(4, 5, 11, year(curDate))
+
+        ' Day after Thanksgiving.
+        ' Basis: Some companies, offer the day after Thanksgiving
+        ' as a floating holiday. Notice, the date target has been
+        ' expressed as thanksgiving + 1 day. If written as the fourth
+        ' Friday in November, results will be inaccurate.
+        ' ///////////////////////////////////////////////////
+        holiday(7) = dateFromDesc(4, 5, 11, year(curDate)) + 1
+
+        ' Christmas Day 12/25. Custom function 'nextWeekDay'
+        ' Basis: Some companies offer the business day after
+        ' Christmas day as a vacation day if December 25th falls
+        ' on a weekend.
+        ' ///////////////////////////////////////////////////
+        holiday(8) = nextWeekDay(CDate("12/25/" &amp; year(curDate)))
+
+
+        ' Check to see if current date is holiday according to above
+        ' holiday schedule.
+        ' ///////////////////////////////////////////////////
+        For i = 1 To UBound(holiday)
+            If curDate = holiday(i) Then
+                isHoliday = True
+                Exit Function
+            End If
+        Next i
+        isHoliday = False
+    End Function
+
+    Function isWorkDay(iDate As Date) As Boolean
+        If isWeekend(iDate) Then
+            isWorkDay = False
+        ElseIf isHoliday(iDate) Then
+            isWorkDay = False
+        Else
+            isWorkDay = True
+        End If
+    End Function
+
+    Function isWeekend(iDate As Date) As Boolean
+        Select Case Weekday(iDate)
+            Case 1:
+                isWeekend = True
+            Case 7:
+                isWeekend = True
+            Case Else
+                isWeekend = False
+        End Select
+    End Function
+
+    Function satPrevSunNext(iDate As Date) As Date
+        Dim actualDay As Date: actualDay = iDate
+        If Weekday(actualDay) = vbSaturday Then
+            actualDay = actualDay - 1
+            satPrevSunNext = actualDay
+        ElseIf Weekday(actualDay) = vbSunday Then
+            actualDay = actualDay + 1
+            satPrevSunNext = actualDay
+        Else
+            satPrevSunNext = actualDay
+        End If
+    End Function
+
+    Function prevWeekDay(iDate As Date) As Date
+        Dim actualDay As Date: actualDay = iDate
+        If isWeekend(actualDay) Then
+            Do While isWeekend(actualDay)
+                actualDay = actualDay - 1
+            Loop
+            prevWeekDay = actualDay
+        Else
+            prevWeekDay = actualDay
+        End If
+    End Function
+
+    Function nextWeekDay(iDate As Date) As Date
+        Dim actualDay As Date: actualDay = iDate
+        If isWeekend(actualDay) Then
+            Do While isWeekend(actualDay)
+                actualDay = actualDay + 1
+            Loop
+            nextWeekDay = actualDay
+        Else
+            nextWeekDay = actualDay
+        End If
+    End Function
+
+    Function dateFromDesc(instance, dayOfWeek, month, year) As Date
+        Dim startDate As Date, endDate As Date, dayCount As Integer, _
+        instanceCount As Integer, curDate As Date, i
+        instanceCount = 0
+        If instance &gt; 0 Then
+            startDate = CDate(month &amp; "/01/" &amp; year)
+            endDate = DateSerial(year, month + 1, 0)
+            curDate = startDate
+            For i = 1 To (Abs(DateDiff("d", startDate, endDate)) + 1)
+                If Weekday(curDate) = dayOfWeek Then
+                    instanceCount = instanceCount + 1
+                    If instanceCount = instance Then
+                        dateFromDesc = curDate
+                        Exit Function
+                    End If
+                End If
+                curDate = startDate + i
+            Next i
+        Else
+            startDate = DateSerial(year, month + 1, 0)
+            endDate = CDate(month &amp; "/01/" &amp; year)
+            curDate = startDate
+            For i = 1 To (Abs(DateDiff("d", startDate, endDate)) + 1)
+                If Weekday(curDate) = dayOfWeek Then
+                    instanceCount = instanceCount + 1
+                        If instanceCount = 1 Then
+                            dateFromDesc = curDate
+                            Exit Function
+                        End If
+                End If
+                curDate = startDate - i
+            Next i
+        End If
+    End Function</pre>
+
 
     </div><!-- /.container -->
 
@@ -60,7 +277,17 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script type="text/javascript" src="../node_modules/codemirror/lib/codemirror.js"></script>
+
+    <!-- CodeMirror -->
+    <!--<script type="text/javascript" src="../node_modules/codemirror/lib/codemirror.js"></script>-->
+
+
+    <!-- CodeMirror Modes -->
+    <script type="text/javascript" src="../node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="../node_modules/codemirror/mode/vb/vb.js"></script>
+
+
+
     <script type="text/javascript" src="assets/js/wpsyntax2codemirror.js"></script>
 
   </body>

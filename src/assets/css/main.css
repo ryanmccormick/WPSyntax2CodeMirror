@@ -1,0 +1,9 @@
+.CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+    margin: 15px 0;
+}
+
+pre[lang] {
+    margin: 15px 0;
+}
