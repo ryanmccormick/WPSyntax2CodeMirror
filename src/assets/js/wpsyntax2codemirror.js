@@ -75,15 +75,19 @@ var wpsyntax2codemirror = (function ($, document, window, CodeMirror) {
    * @returns {*}
    */
   function swapWithCodeMirror(element, mode, value) {
-    return CodeMirror(function (elt) {
-      $(element).replaceWith(elt);
-    }, {
-      value: value,
-      mode: mode,
-      lineNumbers: true,
-      readOnly: 'nocursor',
-      viewportMargin: Infinity
-    });
+    try {
+      return CodeMirror(function (elt) {
+        $(element).replaceWith(elt);
+      }, {
+        value: value,
+        mode: mode,
+        lineNumbers: true,
+        readOnly: 'nocursor',
+        viewportMargin: Infinity
+      });
+    } catch (exception) {
+      console.error('wpsyntax2codemirror::', exception);
+    }
   }
 
   /**
@@ -91,7 +95,11 @@ var wpsyntax2codemirror = (function ($, document, window, CodeMirror) {
    * @returns {*|HTMLElement}
    */
   function getAllWPSyntaxElements() {
-    return $('pre[lang]');
+    try {
+      return $('pre[lang]');
+    } catch (exception) {
+      console.error('wpsyntax2codemirror::', exception);
+    }
   }
 
 })(jQuery, document, window, CodeMirror);
