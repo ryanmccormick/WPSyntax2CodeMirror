@@ -39,12 +39,14 @@ var wpsyntax2codemirror = (function ($, document, window, CodeMirror) {
         currentValue,
         currentElement;
 
-      for (var i = 0, x = wpSyntaxElements.length; i < x; i++) {
-        currentElement = wpSyntaxElements[i];
-        currentMode = $(currentElement).attr('lang').trim().toLowerCase();
-        currentValue = $(currentElement).text();
+      if (wpSyntaxElements && wpSyntaxElements.length > 0) {
+        for (var i = 0, x = wpSyntaxElements.length; i < x; i++) {
+          currentElement = wpSyntaxElements[i];
+          currentMode = $(currentElement).attr('lang').trim().toLowerCase();
+          currentValue = $(currentElement).text();
 
-        swapWithCodeMirror(currentElement, modeConverter(currentMode), currentValue);
+          swapWithCodeMirror(currentElement, modeConverter(currentMode), currentValue);
+        }
       }
     } catch (exception) {
       console.error('wpsyntax2codemirror::', exception);
