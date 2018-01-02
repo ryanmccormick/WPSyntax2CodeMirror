@@ -110,6 +110,6 @@ var wpsyntax2codemirror = (function ($, document, window, CodeMirror) {
 /**
  * Replace all WPSyntax Editors with CodeMirror.
  */
-$(document).ready(function () {
+jQuery(document).ready(function () {
   wpsyntax2codemirror.init();
 });
